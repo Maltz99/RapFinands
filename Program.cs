@@ -74,10 +74,7 @@ namespace Rap_Finands
         }
         static Konto Dos_findKonto() 
         {
-            for (var i = 1; i <= konti.Count;i++)
-            {
-                Console.WriteLine(i+". "+konti[i-1].registreringsnr+" "+konti[i-1].kontonr+" ejes af "+konti[i-1].ejer);
-            }
+            Dos_udskrivKonti();
             Console.WriteLine("Vælg et tal fra 1 til "+konti.Count);
             Console.Write(">");
             int tal = Convert.ToInt32(Console.ReadLine());
@@ -140,7 +137,8 @@ namespace Rap_Finands
             Console.WriteLine("Konto for "+k.ejer+": "+k.registreringsnr+" "+k.kontonr);
             Console.WriteLine("================");
             Console.WriteLine("Tekst\t\t\t\tBeløb\t\tSaldo");
-            foreach (Transaktion t in k.transaktioner) {
+            foreach (Transaktion t in k.transaktioner)
+            {
                 Console.Write(t.tekst+"\t\t");
                 Console.Write(t.amount+"\t\t");
                 Console.WriteLine(t.saldo);
