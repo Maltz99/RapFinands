@@ -33,10 +33,10 @@ namespace Rap_Finands
                 Gem();
             } else {
             }
-            dos_start();
+            Dos_start();
             
         }
-        static void dos_start() {
+        static void Dos_start() {
             Console.WriteLine("Velkommen til Rap Finans af Konrad Sommer");
             Console.WriteLine("Hvad vil du gøre nu?");
             
@@ -48,18 +48,17 @@ namespace Rap_Finands
                 Console.WriteLine("0. Afslut");
 
                 Console.Write(">");
-                string valg1 = Console.ReadLine();
-                int valg = int.Parse(valg1+1);
+                int valg = Convert.ToInt32(Console.ReadLine());
                 
                 switch (valg) {
                     case 1:
-                        dos_opretKonto();
+                        Dos_opretKonto();
                         break;
                     case 2:
-                        dos_opretTransaktion(dos_findKonto());
+                        Dos_opretTransaktion(Dos_findKonto());
                         break;
                     case 3:
-                        dos_udskrivKonto(dos_findKonto());
+                        Dos_udskrivKonto(Dos_findKonto());
                         break;
                     case 0:
                         blivVedogved = false;
@@ -73,7 +72,7 @@ namespace Rap_Finands
             }
             Console.Clear();
         }
-        static Konto dos_findKonto() 
+        static Konto Dos_findKonto() 
         {
             for (var i = 1; i <= konti.Count;i++)
             {
@@ -81,27 +80,30 @@ namespace Rap_Finands
             }
             Console.WriteLine("Vælg et tal fra 1 til "+konti.Count);
             Console.Write(">");
-            int tal = int.Parse(Console.ReadLine());
-            if (tal < 1 || tal > konti.Count) {
+            int tal = Convert.ToInt32(Console.ReadLine());
+            if (tal < 1 || tal > konti.Count)
+            {
                 Console.WriteLine("Ugyldigt valg");
                 Console.Clear();
                 return null;
             }
             return konti[tal-1];
         }
-        static void dos_opretTransaktion(Konto k) 
+        static void Dos_opretTransaktion(Konto k) 
         {
             Console.Write("Tekst: ");
             string tekst = Console.ReadLine();
             Console.Write("Beløb: ");
             float amount = float.Parse(Console.ReadLine());
-            if (GemTrans(k,tekst,amount)) {
-                Console.WriteLine("Transkationen blev gemt. Ny saldo på kontoen: "+findSaldo(k));
+            if (GemTrans(k,tekst,amount))
+            {
+                Console.WriteLine("Transkationen blev gemt. Ny saldo på kontoen: "+FindSaldo(k));
                 Gem();
-            } else
+            } 
+            else
                 Console.WriteLine("Transaktionen kunne ikke gemmes (Der var sikkert ikke penge nok på kontoen)");
         }
-        static Konto dos_opretKonto() 
+        static Konto Dos_opretKonto() 
         {
             Konto k = lavKonto();
             Console.Write("Navn på kontoejer:");
@@ -118,7 +120,7 @@ namespace Rap_Finands
         /*
         fed metode til at lave helt nye kontonumre ~Konrad
         */
-        public static string lavEtKontoNummer() {
+        public static string LavEtKontoNummer() {
             Random tilfael = new Random();
             string nr = tilfael.Next(1,9).ToString();
             for (var i = 1; i <= 9; i++) {
@@ -128,13 +130,13 @@ namespace Rap_Finands
             }
             return nr;
         }
-        static void dos_udskrivKonti() {
+        static void Dos_udskrivKonti() {
             Console.WriteLine("================");
             foreach (Konto k in konti) {
                 Console.WriteLine(k.registreringsnr+" "+k.kontonr+" ejes af "+k.ejer);
             }
         }
-        static void dos_udskrivKonto(Konto k) {
+        static void Dos_udskrivKonto(Konto k) {
             Console.WriteLine("Konto for "+k.ejer+": "+k.registreringsnr+" "+k.kontonr);
             Console.WriteLine("================");
             Console.WriteLine("Tekst\t\t\t\tBeløb\t\tSaldo");
@@ -148,7 +150,7 @@ namespace Rap_Finands
         }
         
         public static bool GemTrans(Konto konto, string tekst, float beløb) {
-            var saldo = findSaldo(konto);
+            var saldo = FindSaldo(konto);
             if (saldo + beløb < 0) return false;
             var t = new Transaktion();
             t.tekst = tekst;
@@ -159,7 +161,7 @@ namespace Rap_Finands
             konto.transaktioner.Add(t);
             return true;
         }
-        public static float findSaldo(Konto k) {
+        public static float FindSaldo(Konto k) {
             Transaktion seneste = new Transaktion();
             DateTime senesteDato = DateTime.MinValue;
             foreach(var t in k.transaktioner) {
