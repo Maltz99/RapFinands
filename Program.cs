@@ -141,7 +141,7 @@ namespace Rap_Finands
             Console.WriteLine("================");
             Console.WriteLine("Tekst\t\t\t\tBeløb\t\tSaldo");
             foreach (Transaktion t in k.transaktioner) {
-                Console.Write(t.tekst+"\t\t\t\t");
+                Console.Write(t.tekst+"\t\t");
                 Console.Write(t.amount+"\t\t");
                 Console.WriteLine(t.saldo);
             }
@@ -154,7 +154,7 @@ namespace Rap_Finands
             if (saldo + beløb < 0) return false;
             var t = new Transaktion();
             t.tekst = tekst;
-            t.amount = belob;
+            t.amount = beløb;
             t.saldo = t.amount + saldo;
             t.dato = DateTime.Now;
             
